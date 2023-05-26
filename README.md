@@ -1,2 +1,2 @@
-# Jira-Tweaks
+# Jira Tweaks
 Various Jira tweaks
