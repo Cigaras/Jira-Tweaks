@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Tweaks
 // @namespace    https://github.com/Cigaras/Jira-Tweaks
-// @version      1.3.0
+// @version      1.0.0
 // @description  Various Jira tweaks
 // @author       Valdas V.
 // @homepage     https://github.com/Cigaras/Jira-Tweaks
@@ -35,11 +35,6 @@
             }
         }
     });
-
-    // Options
-    const commentsSortEnabled = true;   // Switches comments order to oldest first
-    const commentsExpandEnabled = true; // Expands hidden comments
-    const scrollButtonEnabled = true;   // Adds a button to scroll to the bottom of the issue view
 
     function expandComments(activityModule) {
         const loadButton = activityModule.querySelector('button[data-fetch-mode="newer"]');
@@ -106,7 +101,6 @@
     setInterval(() => {
         const activityModule = document.getElementById('activitymodule');
         if (activityModule) {
-
             if (cfg.get('sort_comments_oldest_first')) {
                 const sortButton = activityModule.querySelector("#sort-button[data-order='asc']");
                 if (sortButton) {
@@ -124,25 +118,14 @@
                     expandComments(activityModule);
                 }
             }
-
             if (cfg.get('add_scroll_button')) {
                 var issueContainer = document.querySelector(".issue-view, .detail-panel");
-                var scrollButton = document.getElementById('scroll-button');
                 if (issueContainer) {
+                    var scrollButton = document.getElementById('scroll-button');
                     if (!scrollButton) {
                         addScrollButton(issueContainer);
                     }
-                } else {
-                    if (scrollButton) {
-                        console.error('🐞 Scroll button visible without issue container, should be removed!')
-                    }
                 }
-            }
-
-        } else {
-            var scrollButton = document.getElementById('scroll-button');
-            if (scrollButton) {
-                console.error('🐞 Scroll button visible without activity moodule, should be removed!')
             }
         }
     }, 2000);
