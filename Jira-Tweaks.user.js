@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Tweaks
 // @namespace    https://github.com/Cigaras/Jira-Tweaks
-// @version      1.0.2
+// @version      1.0.3
 // @description  Various Jira tweaks
 // @author       Valdas V.
 // @homepage     https://github.com/Cigaras/Jira-Tweaks
@@ -25,7 +25,7 @@
                 type: 'checkbox',
                 default: true
             },
-            load_all_activity_items: {
+            load_newer_activity_items: {
                 type: 'checkbox',
                 default: true
             },
@@ -108,16 +108,16 @@
                 const sortButton = activityModule.querySelector("#sort-button[data-order='asc']");
                 if (sortButton) {
                     sortButton.click();
-                    if (cfg.get('load_all_activity_items')) {
+                    if (cfg.get('load_newer_activity_items')) {
                         setTimeout(loadActivityItems, 200, activityModule);
                     }
                 } else {
-                    if (cfg.get('load_all_activity_items')) {
+                    if (cfg.get('load_newer_activity_items')) {
                         loadActivityItems(activityModule);
                     }
                 }
             } else {
-                if (cfg.get('load_all_activity_items')) {
+                if (cfg.get('load_newer_activity_items')) {
                     loadActivityItems(activityModule);
                 }
             }
