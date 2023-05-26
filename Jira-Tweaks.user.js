@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Tweaks
 // @namespace    https://github.com/Cigaras/Jira-Tweaks
-// @version      1.0.1
+// @version      1.0.2
 // @description  Various Jira tweaks
 // @author       Valdas V.
 // @homepage     https://github.com/Cigaras/Jira-Tweaks
@@ -21,7 +21,7 @@
         title: 'Jira Tweaks configuration',
         menuCommand: true,
         params: {
-            sort_activity_items_oldest_first: {
+            change_activity_items_order_to_oldest_first: {
                 type: 'checkbox',
                 default: true
             },
@@ -29,7 +29,7 @@
                 type: 'checkbox',
                 default: true
             },
-            add_scroll_button: {
+            add_quick_scroll_button: {
                 type: 'checkbox',
                 default: true
             }
@@ -104,7 +104,7 @@
     setInterval(() => {
         const activityModule = document.getElementById('activitymodule');
         if (activityModule) {
-            if (cfg.get('sort_activity_items_oldest_first')) {
+            if (cfg.get('change_activity_items_order_to_oldest_first')) {
                 const sortButton = activityModule.querySelector("#sort-button[data-order='asc']");
                 if (sortButton) {
                     sortButton.click();
@@ -121,7 +121,7 @@
                     loadActivityItems(activityModule);
                 }
             }
-            if (cfg.get('add_scroll_button')) {
+            if (cfg.get('add_quick_scroll_button')) {
                 var issueContainer = document.querySelector(".issue-view, .detail-panel");
                 if (issueContainer) {
                     var scrollButton = document.getElementById('scroll-button');
