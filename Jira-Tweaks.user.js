@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Tweaks
 // @namespace    https://github.com/Cigaras/Jira-Tweaks
-// @version      1.0.0
+// @version      1.0.1
 // @description  Various Jira tweaks
 // @author       Valdas V.
 // @homepage     https://github.com/Cigaras/Jira-Tweaks
@@ -18,14 +18,14 @@
     'use strict';
 
     var cfg = new MonkeyConfig({
-        title: 'Jira Tweaks config.',
+        title: 'Jira Tweaks configuration',
         menuCommand: true,
         params: {
-            sort_comments_oldest_first: {
+            sort_activity_items_oldest_first: {
                 type: 'checkbox',
                 default: true
             },
-            expand_all_comments: {
+            load_all_activity_items: {
                 type: 'checkbox',
                 default: true
             },
@@ -36,11 +36,11 @@
         }
     });
 
-    function expandComments(activityModule) {
+    function loadActivityItems(activityModule) {
         const loadButton = activityModule.querySelector('button[data-fetch-mode="newer"]');
         if (loadButton) {
             loadButton.click();
-            setTimeout(expandComments, 200, activityModule);
+            setTimeout(loadActivityItems, 200, activityModule);
         }
     }
 
@@ -54,6 +54,7 @@
         scrollButton.style.bottom = '20px';
         scrollButton.style.right = '37px';
         scrollButton.style.zIndex = '9999';
+        scrollButton.title = 'Scroll to bottom';
 
         // Create the button label element
         var scrollButtonLabel = document.createElement('span');
@@ -83,10 +84,12 @@
         // Add scroll event listener
         issueContainer.addEventListener('scroll', function() {
             if (issueContainer.scrollTop < (issueContainer.scrollHeight - issueContainer.clientHeight)) {
+                scrollButton.title = 'Scroll to bottom';
                 scrollButtonLabel.classList.remove('aui-iconfont-chevron-up-circle');
                 scrollButtonLabel.classList.add('aui-iconfont-chevron-down-circle');
                 scrollButtonLabel.innerHTML = '▼';
             } else {
+                scrollButton.title = 'Scroll to top';
                 scrollButtonLabel.classList.remove('aui-iconfont-chevron-down-circle');
                 scrollButtonLabel.classList.add('aui-iconfont-chevron-up-circle');
                 scrollButtonLabel.innerHTML = '▲';
@@ -101,21 +104,21 @@
     setInterval(() => {
         const activityModule = document.getElementById('activitymodule');
         if (activityModule) {
-            if (cfg.get('sort_comments_oldest_first')) {
+            if (cfg.get('sort_activity_items_oldest_first')) {
                 const sortButton = activityModule.querySelector("#sort-button[data-order='asc']");
                 if (sortButton) {
                     sortButton.click();
-                    if (cfg.get('expand_all_comments')) {
-                        setTimeout(expandComments, 200, activityModule);
+                    if (cfg.get('load_all_activity_items')) {
+                        setTimeout(loadActivityItems, 200, activityModule);
                     }
                 } else {
-                    if (cfg.get('expand_all_comments')) {
-                        expandComments(activityModule);
+                    if (cfg.get('load_all_activity_items')) {
+                        loadActivityItems(activityModule);
                     }
                 }
             } else {
-                if (cfg.get('expand_all_comments')) {
-                    expandComments(activityModule);
+                if (cfg.get('load_all_activity_items')) {
+                    loadActivityItems(activityModule);
                 }
             }
             if (cfg.get('add_scroll_button')) {
