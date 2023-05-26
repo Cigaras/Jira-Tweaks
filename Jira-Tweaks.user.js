@@ -7,7 +7,7 @@
 // @homepage     https://github.com/Cigaras/Jira-Tweaks
 // @match        https://*/jira/*
 // @icon         https://jira.atlassian.com/favicon.ico
-// @require      https://raw.githubusercontent.com/odyniec/MonkeyConfig/master/monkeyconfig.js
+// @require      https://raw.githubusercontent.com/odyniec/MonkeyConfig/51456c3/monkeyconfig.js
 // @grant        GM_registerMenuCommand
 // @grant        GM_addStyle
 // @grant        GM_getValue
