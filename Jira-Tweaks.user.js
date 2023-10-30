@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         Jira Tweaks
 // @namespace    https://github.com/Cigaras/Jira-Tweaks
-// @version      1.0.4
+// @version      1.0.5
 // @description  Various Jira tweaks
 // @author       Valdas V.
 // @homepage     https://github.com/Cigaras/Jira-Tweaks
 // @match        https://*/jira/*
 // @icon         https://jira.atlassian.com/favicon.ico
 // @require      https://raw.githubusercontent.com/odyniec/MonkeyConfig/51456c3/monkeyconfig.js
+// @require      http://code.jquery.com/jquery-latest.js
 // @grant        GM_registerMenuCommand
 // @grant        GM_addStyle
 // @grant        GM_getValue
@@ -17,6 +18,7 @@
 (function() {
     'use strict';
 
+    // Config
     var cfg = new MonkeyConfig({
         title: 'Jira Tweaks configuration',
         menuCommand: true,
@@ -36,14 +38,20 @@
         }
     });
 
+    // Define shift click
+    var shiftClick = jQuery.Event("click");
+    shiftClick.shiftKey = true;
+
+    // Find buttons "Load newer" and shift click them
     function loadActivityItems(activityModule) {
-        const loadButton = activityModule.querySelector('button[data-fetch-mode="newer"]');
+        const loadButton = $('button[data-fetch-mode="newer"]');
         if (loadButton) {
-            loadButton.click();
-            setTimeout(loadActivityItems, 200, activityModule);
+            loadButton.trigger(shiftClick);
+            setTimeout(loadActivityItems, 500, activityModule);
         }
     }
 
+    // Add scroll button
     function addScrollButton(issueContainer) {
 
         // Create the floating button element
@@ -109,7 +117,7 @@
                 if (sortButton) {
                     sortButton.click();
                     if (cfg.get('load_newer_activity_items')) {
-                        setTimeout(loadActivityItems, 200, activityModule);
+                        setTimeout(loadActivityItems, 500, activityModule);
                     }
                 } else {
                     if (cfg.get('load_newer_activity_items')) {
