@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Tweaks
 // @namespace    https://github.com/Cigaras/Jira-Tweaks
-// @version      1.0.5
+// @version      1.0.6
 // @description  Various Jira tweaks
 // @author       Valdas V.
 // @homepage     https://github.com/Cigaras/Jira-Tweaks
@@ -47,7 +47,7 @@
         const loadButton = $('button[data-fetch-mode="newer"]');
         if (loadButton) {
             loadButton.trigger(shiftClick);
-            setTimeout(loadActivityItems, 500, activityModule);
+            setTimeout(loadActivityItems, 750, activityModule);
         }
     }
 
@@ -117,7 +117,7 @@
                 if (sortButton) {
                     sortButton.click();
                     if (cfg.get('load_newer_activity_items')) {
-                        setTimeout(loadActivityItems, 500, activityModule);
+                        setTimeout(loadActivityItems, 750, activityModule);
                     }
                 } else {
                     if (cfg.get('load_newer_activity_items')) {
