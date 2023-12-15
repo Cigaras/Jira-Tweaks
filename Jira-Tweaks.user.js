@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Tweaks
 // @namespace    https://github.com/Cigaras/Jira-Tweaks
-// @version      1.0.6
+// @version      1.0.7
 // @description  Various Jira tweaks
 // @author       Valdas V.
 // @homepage     https://github.com/Cigaras/Jira-Tweaks
@@ -42,12 +42,11 @@
     var shiftClick = jQuery.Event("click");
     shiftClick.shiftKey = true;
 
-    // Find buttons "Load newer" and shift click them
+    // Find button "Load newer" and shift click it
     function loadActivityItems(activityModule) {
         const loadButton = $('button[data-fetch-mode="newer"]');
-        if (loadButton) {
+        if (loadButton && loadButton.is(':visible')) {
             loadButton.trigger(shiftClick);
-            setTimeout(loadActivityItems, 750, activityModule);
         }
     }
 
@@ -108,7 +107,7 @@
         document.body.appendChild(scrollButton);
     }
 
-    // Main function, executed every 2 seconds
+    // Main function, executed every second
     setInterval(() => {
         const activityModule = document.getElementById('activitymodule');
         if (activityModule) {
@@ -116,9 +115,6 @@
                 const sortButton = activityModule.querySelector("#sort-button[data-order='asc']");
                 if (sortButton) {
                     sortButton.click();
-                    if (cfg.get('load_newer_activity_items')) {
-                        setTimeout(loadActivityItems, 750, activityModule);
-                    }
                 } else {
                     if (cfg.get('load_newer_activity_items')) {
                         loadActivityItems(activityModule);
@@ -139,6 +135,6 @@
                 }
             }
         }
-    }, 2000);
+    }, 1000);
 
 })();
